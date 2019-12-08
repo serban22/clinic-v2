@@ -23,7 +23,7 @@ public class ClinicFileReader implements ClinicReader {
         URI patients = ClassLoader.getSystemResource(fileName).toURI();
         Path pathOfPatients = Paths.get(patients);
         List<String> strings = Files.readAllLines(pathOfPatients);
-        return strings;
+        return strings
 
     }
 }
