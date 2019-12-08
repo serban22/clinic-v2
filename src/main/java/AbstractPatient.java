@@ -1,6 +1,6 @@
 public abstract class AbstractPatient {
-private int patientId;
-private String patientName;
+    private int patientId;
+    private String patientName;
 
     public int getPatientId() {
         return patientId;
