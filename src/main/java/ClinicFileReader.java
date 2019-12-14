@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class ClinicFileReader implements ClinicReader {
 
+
     public List<AbstractPatient> readPatients() throws IOException, URISyntaxException {
         List<String> strings = readFileByName("human_patients.txt");
         return null;

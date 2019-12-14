@@ -9,4 +9,6 @@ public interface ClinicReader {
 
     Map<Integer, String> readProblems() throws IOException, URISyntaxException;
 
+
+
 }
