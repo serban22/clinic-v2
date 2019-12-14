@@ -14,9 +14,9 @@ public class ClinicFileReader implements ClinicReader {
         List<String> strings = readFileByName("human_patients.txt");
         List<AbstractPatient> patients = new ArrayList<>();
         for (int i = 0; i < strings.size(); i++) {
-            String[] split = strings.get(i).split(",");
-            int patientId = Integer.valueOf(split[0]);
-            String patientName = split[1];
+            String[] patientParameters = strings.get(i).split(",");
+            int patientId = Integer.parseInt(patientParameters[0]);
+            String patientName = patientParameters[1];
             AbstractPatient tempPatient = new HumanPatient(patientId, patientName);
             patients.add(tempPatient);
         }
