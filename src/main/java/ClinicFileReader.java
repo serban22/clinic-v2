@@ -20,12 +20,20 @@ public class ClinicFileReader implements ClinicReader {
     public List<AbstractPatient> readPatients() throws IOException, URISyntaxException {
         List<String> strings = readFileByName(types.getPatientNames());
         List<AbstractPatient> patients = new ArrayList<>();
+        Map<Integer, String> problems = readProblems();
         for (int i = 0; i < strings.size(); i++) {
             String[] patientParameters = strings.get(i).split(",");
             int patientId = Integer.parseInt(patientParameters[0]);
             String patientName = patientParameters[1];
-            AbstractPatient tempPatient = new HumanPatient(patientId, patientName);
-            patients.add(tempPatient);
+            int patientProblemId = Integer.parseInt(patientParameters[2]);
+            String problemName = problems.get(patientProblemId);
+            if (types == PatientTypes.HUMAN) {
+                AbstractPatient tempPatient = new HumanPatient(patientId, patientName, problemName);
+                patients.add(tempPatient);
+            } else if (types == PatientTypes.PET) {
+                AbstractPatient tempPatient = new PetPatient(patientId, patientName, problemName);
+                patients.add(tempPatient);
+            }
         }
         return patients;
     }
@@ -35,7 +43,9 @@ public class ClinicFileReader implements ClinicReader {
         Map<Integer, String> problems = new HashMap<>();
         for (int i = 0; i < strings.size(); i++) {
             String[] patientParameters = strings.get(i).split(",");
-            problems.put(Integer.valueOf(patientParameters[0]), patientParameters[1]);
+            int problemId = Integer.parseInt(patientParameters[0]);
+            String problemName = patientParameters[1];
+            problems.put(problemId, problemName);
         }
         return problems;
     }
@@ -45,7 +55,5 @@ public class ClinicFileReader implements ClinicReader {
         Path pathOfPatients = Paths.get(patients);
         List<String> strings = Files.readAllLines(pathOfPatients);
         return strings;
-
-
     }
 }

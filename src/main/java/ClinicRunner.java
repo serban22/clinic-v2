@@ -24,11 +24,14 @@ public class ClinicRunner {
         AbstractClinic petclinic = new PetClinic();
 
         List<AbstractPatient> petpatients = clinicReader2.readPatients();
+        Map<Integer, String> petproblems = clinicReader2.readProblems();
         System.out.println(petpatients);
+        System.out.println(petproblems);
         petclinic.addBulkPatients(petpatients);
         petclinic.listPatients();
         System.out.println();
 
+        petclinic.addBulkPatients(petpatients);
         petclinic.removePatientByPatientId(1);
         petclinic.removePatientByPatientId(2);
         petclinic.listPatients();
