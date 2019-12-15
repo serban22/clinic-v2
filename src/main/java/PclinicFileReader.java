@@ -11,9 +11,15 @@ import java.util.Map;
 
 public class PclinicFileReader implements ClinicReader {
 
+    private PatientTypes types;
+
+    public PclinicFileReader(PatientTypes types) {
+        this.types = types;
+    }
+
     @Override
     public List<AbstractPatient> readPatients() throws IOException, URISyntaxException {
-        List<String> strings = readFileByName("pet_patients.txt");
+        List<String> strings = readFileByName(types.getPatientNames());
         List<AbstractPatient> patients = new ArrayList<>();
         for (int i = 0; i < strings.size(); i++) {
             String[] patientParameters = strings.get(i).split(",");
@@ -26,7 +32,7 @@ public class PclinicFileReader implements ClinicReader {
     }
 
     public Map<Integer, String> readProblems() throws IOException, URISyntaxException {
-        List<String> strings = readFileByName("pet_problems.txt");
+        List<String> strings = readFileByName(types.getPatientProblems());
         for (int i = 0; i < strings.size(); i++) {
             String[] split = strings.get(i).split(",");
         }

@@ -1,13 +1,17 @@
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
 
 public class ClinicRunner {
     public static void main(String[] args) throws IOException, URISyntaxException {
-        ClinicReader clinicReader = new ClinicFileReader();
-        ClinicReader clinicReader2 = new PclinicFileReader();
+        ClinicReader clinicReader = new ClinicFileReader(PatientTypes.HUMAN);
+        ClinicReader clinicReader2 = new PclinicFileReader(PatientTypes.PET);
+
         List<AbstractPatient> patients = clinicReader.readPatients();
+        Map<Integer, String> problems = clinicReader.readProblems();
         System.out.println(patients);
+        System.out.println(problems);
         AbstractClinic clinic = new HumanClinic();
         clinic.addBulkPatients(patients);
         clinic.listPatients();

@@ -5,13 +5,20 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ClinicFileReader implements ClinicReader {
 
+    private PatientTypes types;
+
+    public ClinicFileReader(PatientTypes types) {
+        this.types = types;
+    }
+
     public List<AbstractPatient> readPatients() throws IOException, URISyntaxException {
-        List<String> strings = readFileByName("human_patients.txt");
+        List<String> strings = readFileByName(types.getPatientNames());
         List<AbstractPatient> patients = new ArrayList<>();
         for (int i = 0; i < strings.size(); i++) {
             String[] patientParameters = strings.get(i).split(",");
@@ -24,11 +31,13 @@ public class ClinicFileReader implements ClinicReader {
     }
 
     public Map<Integer, String> readProblems() throws IOException, URISyntaxException {
-        List<String> strings = readFileByName("human_problems.txt");
+        List<String> strings = readFileByName(types.getPatientProblems());
+        Map<Integer, String> problems = new HashMap<>();
         for (int i = 0; i < strings.size(); i++) {
-            String[] split = strings.get(i).split(",");
+            String[] patientParameters = strings.get(i).split(",");
+            problems.put(Integer.valueOf(patientParameters[0]), patientParameters[1]);
         }
-        return null;
+        return problems;
     }
 
     private List<String> readFileByName(String fileName) throws URISyntaxException, IOException {
